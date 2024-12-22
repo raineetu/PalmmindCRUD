@@ -177,3 +177,22 @@ export const resetPassword = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
+
+// Fetch all registered users
+export const fetchUsers = async (req, res) => {
+  try {
+    const users = await User.find({}, { password: 0 });
+    return res.status(200).json({
+      message: "Users fetched successfully",
+      users,
+      success: true,
+    });
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return res.status(500).json({
+      message: "Server error",
+      success: false,
+      error: error.message,
+    });
+  }
+};
